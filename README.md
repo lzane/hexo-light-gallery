@@ -38,7 +38,7 @@ lightgallery:
 
 Your config will be merged into default config:
 
-```json
+```
 {
     js: 'https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js',
     css: 'https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css',
