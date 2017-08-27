@@ -3,6 +3,12 @@
  */
 var imgRgr = /<img [^>]+>/g;
 
+function ignore(data) {
+  var source = data.source;
+  var ext = source.substring(source.lastIndexOf('.')).toLowerCase();
+  return ['.js', '.css', '.html', '.htm'].indexOf(ext) > -1;
+}
+
 function addTag(data){
     var config = this.config.lightgallery;
     if(!config){
@@ -19,8 +25,8 @@ function addTag(data){
 
     // add plugins
     var plugins = Object.keys(config.plugins);
-    for (var plugin in plugins){
-        var jsTag = '<script src="'+plugins[plugin]+'"></script>';
+    for (var plugin of plugins){
+        var jsTag = '<script src="'+config.plugins[plugin]+'"></script>';
         data.content += jsTag;
     }
 }
@@ -55,6 +61,9 @@ function wrapImage(data){
 }
 
 function render(data){
+    if (ignore(data)){
+        return;
+    }
     wrapImage.call(this,data);
     addTag.call(this,data);
     addRunnableTag.call(this,data);
