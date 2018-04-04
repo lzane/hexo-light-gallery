@@ -1,6 +1,6 @@
 # Hexo-light-gallery
 
-[![npm:](https://img.shields.io/npm/v/hexo-light-gallery.svg)](https://www.npmjs.com/packages/hexo-light-gallery) [![npm](https://img.shields.io/npm/l/hexo-light-gallery.svg)]() 
+[![npm:](https://img.shields.io/npm/v/hexo-light-gallery.svg)](https://www.npmjs.com/package/hexo-light-gallery) [![npm](https://img.shields.io/npm/l/hexo-light-gallery.svg)]() 
 
 > Generate gallery for Hexo
 
