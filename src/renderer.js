@@ -16,7 +16,7 @@ function addTag(data){
     }
 
     // add js
-    data.content = '<div class=".article-gallery"'+data.content+'</div>';
+    data.content = '<div class=".article-gallery">'+data.content+'</div>';
     data.content+='<script src="'+config.js+'"></script>';
 
     // add css
