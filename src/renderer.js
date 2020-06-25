@@ -1,7 +1,7 @@
 /**
  * Created by lzane on 8/20/17.
  */
-var imgRgr = /<img [^>]+>/g;
+var imgRgr = /<img [^>]+>(?!\s*<\/a>)/g;
 
 function ignore(data) {
   var source = data.source;
@@ -16,7 +16,7 @@ function addTag(data){
     }
 
     // add js
-    data.content = '<div class=".article-gallery">'+data.content+'</div>';
+    data.content = '<div class="article-gallery">'+data.content+'</div>';
     data.content+='<script src="'+config.js+'"></script>';
 
     // add css
@@ -37,18 +37,20 @@ function addRunnableTag(data){
         var options = {
             selector: '.gallery-item'
         };
-        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        lightGallery(document.getElementsByClassName('article-gallery')[0], options);
         }`
         +'</script>';
 }
 
 function wrapImage(data){
     data.content = data.content.replace(imgRgr, function replace(match){
+        var isSrcMatched = false;
         var res = '<a ';
-        var hrefResult = /src\s*=\s*"(.+?)"/g.exec(match);
+        var hrefResult = /src\s*=\s*"([^"]+?)"(?!.+?nolink)/g.exec(match);
         if (hrefResult){
             var href = hrefResult[1];
             res+='href="'+href+'" ';
+            isSrcMatched = true;
         }
         var titleResult = /alt\s*=\s*"(.+?)"/g.exec(match);
         if (titleResult){
@@ -56,7 +58,10 @@ function wrapImage(data){
             res+='title="'+title+'" ';
         }
         res+='class="gallery-item">'+match+'</a>';
-        return res;
+        if (isSrcMatched) {
+            return res;
+        }
+        return match;
     });
 }
 
