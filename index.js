@@ -4,18 +4,18 @@
 const renderer = require('./src/renderer');
 
 function addCssTag() {
-  const config = this.config?.lightgallery;
-  if (!config) {
+  if (!Object.hasOwnProperty(this.config, 'lightgallery')) {
     return '';
   }
+  const config = this.config.lightgallery;
   return `<link rel="stylesheet" type="text/css" href="${config.css}" />`;
 }
 
 function addJsTag() {
-  const config = this.config?.lightgallery;
-  if (!config) {
+  if (!Object.hasOwnProperty(this.config, 'lightgallery')) {
     return '';
   }
+  const config = this.config.lightgallery;
   const plugins = Object.keys(config.plugins);
   let jsTag = `<script src="${config.js}"></script>`;
   for (const plugin of plugins) {
