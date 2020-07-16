@@ -4,7 +4,7 @@
 const renderer = require('./src/renderer');
 
 function addCssTag() {
-  const config = this.config.lightgallery;
+  const config = this.config?.lightgallery;
   if (!config) {
     return '';
   }
@@ -12,7 +12,7 @@ function addCssTag() {
 }
 
 function addJsTag() {
-  const config = this.config.lightgallery;
+  const config = this.config?.lightgallery;
   if (!config) {
     return '';
   }
