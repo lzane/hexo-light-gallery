@@ -4,36 +4,40 @@
 const renderer = require('./src/renderer');
 
 function addCssTag() {
-  if (!Object.hasOwnProperty(this.config, 'lightgallery')) {
+  if (!Object.prototype.hasOwnProperty.call(hexo.config, 'lightgallery')) {
     return '';
   }
-  const config = this.config.lightgallery;
-  return `<link rel="stylesheet" type="text/css" href="${config.css}" />`;
+  const configCss = hexo.config.lightgallery.css;
+  hexo.log.debug(`lightgallery addCssTag: ${configCss}`);
+  return `<link rel="stylesheet" type="text/css" href="${configCss}" />`;
 }
 
 function addJsTag() {
-  if (!Object.hasOwnProperty(this.config, 'lightgallery')) {
+  if (!Object.prototype.hasOwnProperty.call(hexo.config, 'lightgallery')) {
     return '';
   }
-  const config = this.config.lightgallery;
+  const config = hexo.config.lightgallery;
   const plugins = Object.keys(config.plugins);
-  let jsTag = `<script src="${config.js}"></script>`;
+  hexo.log.debug(`lightgallery addJsTag: ${config.js}`);
+  let jsTag = `<script src="${config.js}"></script>\n`;
   for (const plugin of plugins) {
-    jsTag += `<script src="${config.plugins[plugin]}"></script>`;
+    jsTag += `<script src="${config.plugins[plugin]}"></script>\n`;
+    hexo.log.debug(`lightgallery addJsTag: ${config.plugins[plugin]}`);
   }
+
   return `${jsTag}
     <script>if (typeof lightGallery !== 'undefined') {
-      const options = { selector: '.gallery-item' };
-      const gallery = Array.from(document.getElementsByClassName('article-gallery'));
-      for (const target of gallery) {
-        lightGallery(target, options);
+      const gallery = document.getElementsByClassName('${config.className}');
+      for (const album of gallery) {
+        lightGallery(album, { selector: '.gallery-item' });
       }
     }</script>`;
 }
 
 hexo.config.lightgallery = Object.assign({
-  js: 'https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js',
-  css: 'https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css',
+  js: 'https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js',
+  css: 'https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css',
+  className: 'article-gallery',
   plugins: {},
 }, hexo.config.lightgallery);
 
